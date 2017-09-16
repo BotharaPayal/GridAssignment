@@ -1,0 +1,45 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">{{vm.myoptions.title}}
+        <div style="float: right; margin-right:20px; margin-top: -7px">
+            <div class="dropdown" style="display: inline-block">
+                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" style="min-width: 170px; text-align:left; background-color: rgba(0, 0, 0, 0.5); color: #fff">Filter
+
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="item in vm.myoptions.dataColumns">
+                        <input type="checkbox" ng-model="item.visible" style="margin-left:5px" />
+                        <a href="" style="display: inline-block">{{item.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td ng-class="vm.classCaret" ng-repeat="col in vm.myoptions.dataColumns" ng-if="col.visible" ng-style="{ width : col.width + 'px'}">
+
+                    <a href="#" ng-click="vm.changeSort(col)">
+                  {{col.name}}
+                  <span ng-show="vm.sortType == col.field" class="caret"></span>
+                  </a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="employee in vm.myoptions.data | orderBy:vm.sortType:vm.sortReverse">
+                <td ng-repeat="col in vm.myoptions.dataColumns track by $index" ng-if="col.visible" ng-style="{ width : col.width + 'px'}">
+                    <div ng-if="!col.template">
+                        {{ employee[col.field] }}
+                    </div>
+                    <div compile ng-bind-html="col.template">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
